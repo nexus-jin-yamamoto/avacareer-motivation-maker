@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>つくる｜志望動機メーカー</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Shippori+Mincho:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fffdf4;--amber:#f5a800;--orange:#f07b16;--ink:#33270e;--deep:#7a5200;--mut:#8a7a58;--paper:#fffef9}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Zen Kaku Gothic New',sans-serif;color:var(--ink);background:radial-gradient(820px 460px at 100% 0%,#fff3d1,transparent),var(--bg);min-height:100vh}
+  header{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;max-width:900px;margin:0 auto}
+  .logo{font-weight:900;color:var(--deep)}
+  .logo a{text-decoration:none;color:inherit}
+  .logo i{font-style:normal;color:var(--orange)}
+  header .reg{background:var(--orange);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:99px}
+  main{max-width:620px;margin:0 auto;padding:40px 24px 90px}
+  h1{font-size:25px;font-weight:900;text-align:center}
+  h1 b{color:var(--orange)}
+  .sub{text-align:center;color:var(--mut);font-size:13.5px;margin:10px 0 28px;line-height:2}
+  .form{background:#fff;border:1px solid #f3e6c8;border-radius:18px;padding:26px;box-shadow:0 16px 40px rgba(122,82,0,.1)}
+  .f{margin-bottom:14px}
+  .f label{display:block;font-size:12.5px;font-weight:800;color:var(--deep);margin-bottom:6px}
+  .f input,.f select{width:100%;border:1.5px solid #eadfc4;border-radius:10px;padding:13px 15px;font-size:14px;font-family:inherit;background:#fffdf6}
+  .f input:focus,.f select:focus{outline:2px solid var(--amber)}
+  .gen{width:100%;background:linear-gradient(120deg,var(--amber),var(--orange));border:none;color:#fff;font-weight:900;font-size:15.5px;padding:16px;border-radius:12px;cursor:pointer;font-family:inherit;box-shadow:0 12px 26px rgba(240,123,22,.35)}
+  #loading{display:none;text-align:center;padding:56px 0;color:var(--mut);font-weight:700}
+  .pen{font-size:38px;animation:wr 1s ease infinite alternate}
+  @keyframes wr{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+  #result{display:none}
+  .paper{background:var(--paper);border:1px solid #efe3c5;border-radius:6px;padding:32px 30px;box-shadow:0 22px 50px rgba(122,82,0,.16);position:relative}
+  .paper h3{font-family:'Shippori Mincho',serif;font-size:15px;color:var(--deep);border-bottom:2px solid var(--amber);display:inline-block;padding-bottom:4px;margin-bottom:16px}
+  .paper p{font-size:14px;line-height:2.3;color:#4a3c1c;white-space:pre-wrap}
+  .stamp{position:absolute;top:-14px;right:-8px;background:#fff;border:2px solid var(--orange);color:var(--orange);border-radius:14px;padding:10px 16px;font-weight:900;font-size:12.5px;transform:rotate(-4deg);box-shadow:0 12px 26px rgba(240,123,22,.25)}
+  .stamp b{display:block;font-size:18px}
+  .tools{display:flex;gap:10px;margin-top:16px}
+  .tools button{flex:1;background:#fff2cd;border:none;color:var(--deep);font-weight:900;font-size:12.5px;padding:12px;border-radius:99px;cursor:pointer;font-family:inherit}
+  .cta{margin-top:24px;text-align:center;background:#fff;border:1px solid #f3e6c8;border-radius:18px;padding:30px 24px}
+  .cta h2{font-size:18.5px;font-weight:900;line-height:1.7}
+  .cta h2 b{color:var(--orange)}
+  .cta p{color:var(--mut);font-size:13.5px;line-height:2;margin:10px 0 20px}
+  .cta a{display:inline-block;background:linear-gradient(120deg,var(--amber),var(--orange));color:#fff;text-decoration:none;font-weight:900;font-size:15px;padding:15px 38px;border-radius:99px;box-shadow:0 12px 28px rgba(240,123,22,.35)}
+  .again{display:block;text-align:center;margin-top:18px;color:var(--mut);font-size:12px;cursor:pointer;text-decoration:underline}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><a href="/">AVA<i>CAREER</i></a> <span style="font-weight:500;color:#8a7a58;font-size:13px">志望動機メーカー</span></div>
+  <a class="reg" href="/register/">無料登録</a>
+</header>
+<main>
+  <h1>その企業のためだけの<b>志望動機</b>を</h1>
+  <p class="sub">3項目を入れるだけ。AIが企業に合わせて自動生成します。</p>
+
+  <div class="form" id="form">
+    <div class="f"><label>応募する企業名</label><input id="co" placeholder="例）株式会社サンプル"></div>
+    <div class="f"><label>その企業の魅力・特徴（ひとことでOK）</label><input id="ap" placeholder="例）営業のデータドリブン化を進めている"></div>
+    <div class="f"><label>あなたの強み・経験</label><input id="st" placeholder="例）法人営業3年、新規開拓で商談化率1.8倍"></div>
+    <div class="f"><label>文字数</label><select id="len"><option value="s">200字（履歴書向け）</option><option value="m" selected>400字（ES向け）</option></select></div>
+    <button class="gen" onclick="gen()">志望動機を生成する</button>
+  </div>
+
+  <div id="loading"><div class="pen">✒️</div>あなたの想いを文章にしています…</div>
+
+  <div id="result">
+    <div class="paper">
+      <div class="stamp">企業マッチ度<b id="score">—</b></div>
+      <h3 id="pt">志望動機</h3>
+      <p id="body"></p>
+    </div>
+    <div class="tools">
+      <button onclick="cp()">全文コピー</button>
+      <button onclick="location.reload()">条件を変えて再生成</button>
+    </div>
+    <div class="cta">
+      <h2>刺さる志望動機ができたら、<b>刺さる企業</b>に届けよう。</h2>
+      <p>AVACAREERなら、この志望動機をAIアバターがそのまま企業面談で代弁します。</p>
+      <a href="/register/">無料登録して志望動機を企業に届ける</a>
+    </div>
+  </div>
+</main>
+<script>
+function gen(){
+  const co=document.getElementById('co').value.trim()||"貴社";
+  const ap=document.getElementById('ap').value.trim()||"事業の成長性";
+  const st=document.getElementById('st').value.trim()||"これまでの実務経験";
+  const len=document.getElementById('len').value;
+  document.getElementById('form').style.display='none';
+  document.getElementById('loading').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('loading').style.display='none';
+    document.getElementById('result').style.display='block';
+    document.getElementById('pt').textContent="志望動機（"+co+" 御中）";
+    document.getElementById('score').textContent=(88+Math.floor(Math.random()*10))+"点";
+    const base="貴社が取り組まれている「"+ap+"」という点に強く共感し、志望いたしました。私には"+st+"という経験があり、この強みは貴社の事業においても直接活かせるものと考えております。";
+    const extra="\n\nまた、変化の速い環境の中で自ら課題を見つけて行動できることが私の持ち味です。入社後は一日も早く戦力となり、現場の成果に貢献しながら、中長期的には事業の成長を牽引する存在になりたいと考えております。貴社でこそ、その挑戦ができると確信しております。";
+    document.getElementById('body').textContent=len==="s"?base:base+extra;
+  },1800);
+}
+function cp(){navigator.clipboard.writeText(document.getElementById('body').textContent)}
+</script>
+</body>
+</html>
